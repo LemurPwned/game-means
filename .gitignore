@@ -1,5 +1,8 @@
 /Gentetic/nbproject/private/
 /Gentetic/build/
-/Genetic/build.xml
-/Genetic/manifest.xml
-/Genetic/nbproject
+Gentetic/build.xml
+Gentetic/manifest.mf
+Gentetic/nbproject/build-impl.xml
+Gentetic/nbproject/genfiles.properties
+Gentetic/nbproject/project.properties
+Gentetic/nbproject/project.xml
