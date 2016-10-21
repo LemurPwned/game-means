@@ -24,10 +24,51 @@ public class Gentetic{
     static final int y_size = 300;
     static int pop_size = 10;
     public static BufferedImage img =new BufferedImage (x_size + 100, y_size + 100,BufferedImage.TYPE_INT_RGB);
-
+    /*TODO:
+    Tuple <lista> = new Tuple {10};
+       lista(1) = (x,y);
+    double [] dist = new double[10];
+    sort(dist) return lista indexów
     
-    public static void genetic_alg(){
-        double [][] population;
+    */
+    
+    public static void geneticAlgorithm(){
+        double [][] population = new double [x_size][y_size];
+        population = populate(population);
+        int [] top_ten_x = new int [pop_size];
+        int [] top_ten_y = new int [pop_size];
+        double [] top_ten = new double [pop_size];
+        int c = 0;
+        for (int i = 0; i < population.length; i++) {
+            for (int j = 0; j < population.length; j++) {
+                if(population[i][j]!=-1){
+                    top_ten[c] = population[i][j];
+                    c++;
+                }
+            }            
+        }
+       Arrays.sort(top_ten);
+       int x;
+        for (int i = 0; i < top_ten.length; i++) {
+         
+            
+        }
+    }
+    public static void linearSort(double [] array){
+        double max;
+        int t;
+        for (int i = array.length-1; i >= 0 ; i--) {
+            max = array[i];
+            t = i;
+            for (int j = i-1; j >= 0; j--) {
+                if(max < array[j]){
+                    max = array[j];
+                    t = j;
+                }
+            }
+            array[t] = array[i];
+            array[i] = max;            
+        }
     }
     public static double distance(int x, int y){
         double dist = Math.pow(x - solution_x, 2) + Math.pow(y - solution_y, 2);
@@ -97,7 +138,7 @@ public class Gentetic{
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-       /*BufferedImage img = new BufferedImage (x_size, y_size, BufferedImage.TYPE_INT_RGB);
+      /* BufferedImage img = new BufferedImage (x_size, y_size, BufferedImage.TYPE_INT_RGB);
        double [][] init_pop = new double[x_size][y_size];
        init_pop = populate(init_pop);
        //print(init_pop);
@@ -114,14 +155,15 @@ public class Gentetic{
        for (int i = 0; i < 10; i++) {
             img.setRGB(solution_x + i, solution_y + i, sol.getRGB());
         }
-        
-        
+                
        File f = new File("C:\\Users\\Jakub\\Desktop\\Genetic.jpg");
-       ImageIO.write(img, "JPEG", f);*/
-        for (int i = 0; i < 15; i++) {
-            System.out.println(mutate("10001"));
+       ImageIO.write(img, "JPEG", f);
+        */
+        double [] top_ten = {0, 12, 334134, 1421 ,125,3,1,2, 5423421, 7, 8, 41, 99, 132, 14142 ,41312, -1};
+        linearSort(top_ten);
+        for (int i = 0; i < top_ten.length; i++) {
+            System.out.println(top_ten[i]);
         }
-        
         
     }
     
