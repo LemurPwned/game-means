@@ -6,37 +6,122 @@
 package gentetic;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
 /**
  *
  * @author Jakub
  */
 public class Gentetic{
-    public static BufferedImage img =new BufferedImage (6000, 6000,BufferedImage.TYPE_INT_RGB);
     static Color [] color = {Color.red, Color.green, Color.yellow, Color.white, Color.black, Color.pink, Color.magenta, Color.blue, Color.orange, Color.green};
+    static int solution_x = 150;
+    static int solution_y = 60;
+    static final int x_size = 300;
+    static final int y_size = 300;
+    static int pop_size = 10;
+    public static BufferedImage img =new BufferedImage (x_size + 100, y_size + 100,BufferedImage.TYPE_INT_RGB);
+
+    
+    public static void genetic_alg(){
+        double [][] population;
+    }
+    public static double distance(int x, int y){
+        double dist = Math.pow(x - solution_x, 2) + Math.pow(y - solution_y, 2);
+        return Math.sqrt(dist);
+    }
+    public static String int2string(int x){
+        if (x == 0){
+            return "";
+        }
+        else{
+            return int2string(x/2)+ x%2;
+        }
+    }
+        /**
+         * Returns the string a with addtional zeros to make up for the 
+         * longer string b, if a is longer than b, it returns b compensated
+         * with extra zeros, so that two match in length
+     * @param a is the shorter string
+     * @param b is the longer string
+     */
+    public static String compare(String a, String b){
+        if(a.length() < b.length()){
+            while(a.length()!=b.length()){
+                a="0"+b;
+            }
+            return a;
+        }
+        else{
+            while(a.length()!=b.length()){
+                b="0"+b;
+            } 
+            return b;
+        }
+    }
+    public static String mutate(String x){
+        int p = ThreadLocalRandom.current().nextInt(0, x.length());
+        if(x.charAt(p)=='1'){
+            x = x.substring(0,p)+'0'+x.substring(p+1,x.length());
+        } 
+        else{
+            x = x.substring(0,p)+'1'+x.substring(p+1,x.length());
+        }
+        return x;
+    }
+    public static double [][] populate(double[][] population){
+        for (int i = 0; i < population.length; i++) {
+            for (int j = 0; j < population.length; j++) {
+                population[i][j] = -1.0;                
+            }            
+        }
+        for (int i = 0; i < pop_size; i++) {
+            int num = ThreadLocalRandom.current().nextInt(0, x_size);
+            int num2 = ThreadLocalRandom.current().nextInt(0, y_size);
+            population[num][num2] = distance(num, num2);          
+        }
+        return population;
+    }
+   public static void print(double [][] array){
+       for (int i = 0; i < array.length; i++) {
+           System.out.print("\n");
+           for (int j = 0; j < array.length; j++) {
+               System.out.printf("%.2f"+ " ", array[i][j]);
+           }           
+       }
+   }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        BufferedImage img = new BufferedImage (300, 300, BufferedImage.TYPE_INT_RGB);
-        int [][] grid = new int[300][300];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid.length; j++) {
+       /*BufferedImage img = new BufferedImage (x_size, y_size, BufferedImage.TYPE_INT_RGB);
+       double [][] init_pop = new double[x_size][y_size];
+       init_pop = populate(init_pop);
+       //print(init_pop);
+       for (int i = 0; i < init_pop.length; i++) {
+            for (int j = 0; j < init_pop.length; j++) {
                 int max = color.length;
-                int num = ThreadLocalRandom.current().nextInt(0, max);
-                Color t_col = color[num];
-                grid[i][j] = num;
-                img.setRGB(i, j, t_col.getRGB());
+                if (init_pop[i][j] != -1){
+                    Color t_color = Color.white;
+                    img.setRGB(i, j, t_color.getRGB());
+                }
             }
+       }
+       Color sol = Color.red;
+       for (int i = 0; i < 10; i++) {
+            img.setRGB(solution_x + i, solution_y + i, sol.getRGB());
         }
+        
+        
        File f = new File("C:\\Users\\Jakub\\Desktop\\Genetic.jpg");
-       ImageIO.write(img, "JPEG", f);
-
+       ImageIO.write(img, "JPEG", f);*/
+        for (int i = 0; i < 15; i++) {
+            System.out.println(mutate("10001"));
+        }
+        
         
     }
     
