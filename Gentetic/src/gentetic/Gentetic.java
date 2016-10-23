@@ -171,7 +171,7 @@ public class Gentetic{
         for (int i = 0; i < top_ten.length; i++) {
             //System.out.println(top_ten[i]);
         }
-        String [] a = recombine("111100001");
+        String [] a = split("111100001");
         System.out.println(a[0]);
         System.out.println(a[1]);
     }
