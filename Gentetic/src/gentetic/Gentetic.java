@@ -54,6 +54,13 @@ public class Gentetic{
             
         }
     }
+    
+    public static String [] split(String l){
+        int length = l.length();
+        String [] parts = {l.substring(0, length/2), l.substring(length/2 , length)};
+        return parts;
+    }
+    
     public static void linearSort(double [] array){
         double max;
         int t;
@@ -162,9 +169,11 @@ public class Gentetic{
         double [] top_ten = {0, 12, 334134, 1421 ,125,3,1,2, 5423421, 7, 8, 41, 99, 132, 14142 ,41312, -1};
         linearSort(top_ten);
         for (int i = 0; i < top_ten.length; i++) {
-            System.out.println(top_ten[i]);
+            //System.out.println(top_ten[i]);
         }
-        
+        String [] a = recombine("111100001");
+        System.out.println(a[0]);
+        System.out.println(a[1]);
     }
     
 }
