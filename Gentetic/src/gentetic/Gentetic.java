@@ -6,12 +6,11 @@
 package gentetic;
 
 import java.awt.Color;
-import java.io.File;
 import java.util.concurrent.ThreadLocalRandom;
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Random;
 /**
  *
  * @author Jakub
@@ -77,10 +76,12 @@ public class Gentetic{
             array[i] = max;            
         }
     }
+    
     public static double distance(int x, int y){
         double dist = Math.pow(x - solution_x, 2) + Math.pow(y - solution_y, 2);
         return Math.sqrt(dist);
     }
+    
     public static String int2string(int x){
         if (x == 0){
             return "";
@@ -141,6 +142,43 @@ public class Gentetic{
            }           
        }
    }
+   public static void binaryGenetic(String parent) {
+         String[] child = new String[5];
+         String[] halfChild = new String[10];
+
+         int k=0;
+         for (int i=0; i<5; i++) {
+             child[i]=parent.substring(k,k+6);
+             k+=6;
+         }
+
+         k=0;
+         int j=0;
+         for (int i=0; i<10; i++) {
+             halfChild[i]=child[j].substring(k,k+3);
+             if(i%2==1) j++;
+             k+=3;
+             if(k==6) k=0;
+         }
+
+         int theChosenOne = ThreadLocalRandom.current().nextInt(0, 2);
+         String temp = halfChild[theChosenOne+2];
+         halfChild[theChosenOne+2] = halfChild[theChosenOne];
+         halfChild[theChosenOne] = temp;
+
+         Random random = new Random();
+         for (int i=0; i<6; i+=2) {
+             theChosenOne = ThreadLocalRandom.current().nextInt(i+4, i+6);
+             if (theChosenOne%2==0) halfChild[theChosenOne] = halfChild[random.nextBoolean() ? 0 : 2];
+             else halfChild[theChosenOne] = halfChild[random.nextBoolean() ? 1 : 3];
+         }
+
+         j=0;
+         for (int i=0; i<10; i+=2) {
+             child[j] = halfChild[i].concat(halfChild[i+1]);
+             j++;
+         }
+     }
     /**
      * @param args the command line arguments
      */
@@ -171,9 +209,7 @@ public class Gentetic{
         for (int i = 0; i < top_ten.length; i++) {
             //System.out.println(top_ten[i]);
         }
-        String [] a = split("111100001");
-        System.out.println(a[0]);
-        System.out.println(a[1]);
+        
     }
     
 }
