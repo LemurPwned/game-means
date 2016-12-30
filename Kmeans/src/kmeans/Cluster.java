@@ -10,8 +10,6 @@ package kmeans;
  * @author Jakub
  */
 public class Cluster extends Point {
-    private int x;  //this is now coordinate of a center
-    private int y;
     private Point[] group; //this is a group of points that belong to given cluster.
     
     public Cluster(int x, int y){
@@ -31,8 +29,14 @@ public class Cluster extends Point {
             sumx+=group1.getX();
             sumy+=group1.getY();
         }
-        this.x = (int)(sumx/this.group.length);
-        this.y = (int)(sumy/this.group.length);
+        System.out.println(this.toString());
+        System.out.println("Sum x " + sumx + " Sum y " + sumy);
+        System.out.println("Group : " + this.group.length);
+        //this.x = (int)(sumx/this.group.length);
+        //this.y = (int)(sumy/this.group.length);
+        this.setX((int)(sumx/this.group.length));
+        this.setY((int)(sumy/this.group.length));
+        System.out.println(this.toString());
     }
     
     public Point[] getGroup() {

@@ -11,7 +11,6 @@ package kmeans;
  */
 import java.awt.*;
 import java.io.IOException;
-import static java.lang.Math.*;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.*;
 
@@ -21,6 +20,11 @@ public class Kmeans extends JFrame{
 static Color [] color = {Color.red, Color.green, Color.yellow, Color.pink, Color.magenta, Color.blue, Color.orange, Color.green, Color.white};
 public static final int C_WIDTH = 640;
 public static final int C_HEIGTH = 480;
+
+
+public static final int points = 20;
+public static final int groups = 4;
+public static Cluster [] test = new Cluster[groups];
 
 private final DrawClusters canvas;
 public Kmeans(){
@@ -36,6 +40,35 @@ public Kmeans(){
     setVisible(true);
     
 }
+    public static void setUp (){
+           //set some random init points
+           Point [][] set = null;
+            //generate some points around these clusters
+            for (int i = 0; i < groups; i++) {
+                test[i] = new Cluster(ThreadLocalRandom.current().nextInt(10,C_WIDTH-10),ThreadLocalRandom.current().nextInt(10,C_HEIGTH-10));
+                test[i].setGroup(generate_Points(points,30,test[i]));
+                
+                //assign to clusters, since we want to check if algorithm would recalculate
+                
+                //a little lousy but creating a list of points, quicker that way
+                //set[i] = generate_Points(points,30,test[i]);
+            }
+            //System.out.println(test[2].getGroup()[2].toString());
+            //change the coords for these cluster to see if they converge to previous ones.
+            for (int i = 0; i < groups; i++) {
+                test[i].setX(ThreadLocalRandom.current().nextInt(10,C_WIDTH-10));
+                test[i].setY(ThreadLocalRandom.current().nextInt(10,C_HEIGTH-10));
+                System.out.println("Old coords : " + test[i].toString());
+            }
+            
+            //now recalculate
+            for (int i = 0; i < groups; i++) {
+                test[i].newClusterCenter();
+                System.out.println("New coords : " + test[i].toString());
+            }
+    }
+    
+   
     public static Point [] generate_Points(int count, int radius, Point sample){
         Point [] set = new Point [count];
         int sX = sample.getX();
@@ -46,10 +79,6 @@ public Kmeans(){
         return set;
     }
     
-    public double distance(Point a, Point b){
-        return sqrt(pow(a.getX()-b.getX(),2) + pow(a.getY()-b.getY(),2));
-    }
-    
     //private class just to draw on JPanel
     private class DrawClusters extends JPanel {
         @Override
@@ -57,29 +86,13 @@ public Kmeans(){
             super.paintComponent(g);
             setBackground(Color.BLACK);
 
-            Cluster a,b,c,d;
-            a=b=c=d = null;
-            Cluster [] test = {a,b,c,d};
-            int points = 20;
-            int groups = 4;
-            
-            for (int i = 0; i < groups; i++) {
-                test[i] = new Cluster(ThreadLocalRandom.current().nextInt(10,C_WIDTH),ThreadLocalRandom.current().nextInt(10,C_HEIGTH));
-                test[i].setGroup(generate_Points(points,30,test[i]));
-            }
             int width = 5;
             int height = 5;
             
             for(int i = 0; i < groups; i++){
                 g.setColor(Color.WHITE);
-                g.fillOval(test[i].getX(), test[i].getY(), width*2, height*2);
-                System.out.println("Old coords : " + test[i].toString());
-                test[i].newClusterCenter();
-                System.out.println("New coords : " + test[i].toString());
-                g.setColor(Color.BLUE);
-                g.fillOval(test[i].getX(), test[i].getY(), width*2, height*2);
+                g.fillOval(test[i].getX(), test[i].getY(), width*2, height*2);            
                 g.setColor(color[i]);
-                //System.out.println("DRAWING CLUSTER " + i );
                 
                 for (int j = 0; j < points; j++) {
                     g.drawOval(test[i].getGroup()[j].getX(), test[i].getGroup()[j].getY(), width, height);
@@ -96,7 +109,8 @@ public Kmeans(){
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        EventQueue.invokeLater(new Runnable() {
+        setUp();
+        SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
