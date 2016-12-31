@@ -20,7 +20,7 @@ public class Point {
         this.y = y;
     }
 
-    public void closestCluster(Cluster[] set){
+    public Cluster closestCluster(Cluster[] set){
         Cluster best = set[0];
         double best_distance = distance(this, (Point) set[0]);
         double temp_dist = 0.0;
@@ -31,6 +31,7 @@ public class Point {
                 best = set[i];
         }
         }
+        return best;
     }
     
     public double distance(Point a, Point b){
