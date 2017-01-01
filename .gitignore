@@ -1,2 +1,7 @@
 /Kmeans/nbproject/private/
 /Kmeans/build/
+/Kneighs/nbproject/private/
+/Kneighs/build/
+*.xml
+*.mf
+*.properties

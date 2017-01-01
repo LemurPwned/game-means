@@ -126,16 +126,6 @@ public static Point [] generate_Points(int count, int radius, Point sample){
                     g.drawOval(group2.getX(), group2.getY(), width, height);
                 }
             }
-            /*
-            for(int i = 0; i < groups; i++){
-                g.setColor(Color.WHITE);
-                g.fillOval(test[i].getX(), test[i].getY(), width*2, height*2);            
-                g.setColor(color[i]);
-                
-                for (int j = 0; j < points; j++) {
-                    g.drawOval(test[i].getGroup()[j].getX(), test[i].getGroup()[j].getY(), width, height);
-                }   
-            }*/  
         }
     }
 
