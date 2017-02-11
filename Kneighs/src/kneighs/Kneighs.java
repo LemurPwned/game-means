@@ -18,8 +18,8 @@ import javax.swing.JPanel;
  * @author Jakub
  */
 public class Kneighs extends JFrame{
-    public static Point [] C = new Point[20];
-    public static Point test = new Point(160, 168);
+    public static Point [] D = new Point[30];
+    public static Point test = new Point(ThreadLocalRandom.current().nextInt(0, 340),ThreadLocalRandom.current().nextInt(0, 240));
     
     public static final int C_WIDTH = 640;
     public static final int C_HEIGTH = 480;
@@ -58,15 +58,16 @@ public class Kneighs extends JFrame{
     public static void setUp(){
         Class a = new Class("A", 0, Color.GREEN);
         Class b = new Class("B", 1, Color.RED);
+        Class c = new Class("C", 2, Color.YELLOW);
         Point [] A = generatePoints(10, a, 70, 80, 30);
         Point [] B = generatePoints(10, b, 160, 210, 30);
+        Point [] C = generatePoints(10, c, 320 , 290, 30);
+        System.arraycopy(A,0,D,0,10);
+        System.arraycopy(B,0,D,10,10);
+        System.arraycopy(C,0,D,20,10);
+        int k = 3;
         
-        System.arraycopy(A,0,C,0,10);
-        System.arraycopy(B,0,C,10,10);
-       
-        int k = 12;
-        
-        Point [] nearest = test.findKNearest(k, C);
+        Point [] nearest = test.findKNearest(k, D);
         test.setC(kneighs.Point.vote(nearest));
     }
     
@@ -77,7 +78,7 @@ public class Kneighs extends JFrame{
             setBackground(Color.BLACK);
             int h = 5;
             int w = 5;
-            for (kneighs.Point point : C){
+            for (kneighs.Point point : D){
                 g.setColor(point.getC().getColor());
                 g.drawOval(point.getX(), point.getY(),w, h);
             }
